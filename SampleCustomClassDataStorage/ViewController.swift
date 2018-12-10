@@ -12,7 +12,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // 画面表示時にデータを格納
+        let userDefaults = UserDefaults.standard
+        let data = MyData()
+        data.valueString = "text"
+        userDefaults.set(data, forKey: "data")
+        userDefaults.synchronize()
     }
 
 
