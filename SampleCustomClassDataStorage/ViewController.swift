@@ -16,8 +16,18 @@ class ViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         let data = MyData()
         data.valueString = "text"
-        userDefaults.set(data, forKey: "data")
+        // シリアライズ処理の実行
+        let archivedData = NSKeyedArchiver.archivedData(withRootObject: data)
+        userDefaults.set(archivedData, forKey: "data")
         userDefaults.synchronize()
+        // デシリアライズ処理の実行
+        if let storedData = userDefaults.object(forKey: "data") as? Data {
+            if let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: storedData) as? MyData {
+                if let valueString = unarchivedData.valueString {
+                    print("デシリアライズデータ：" + valueString)
+                }
+            }
+        }
     }
 
 
